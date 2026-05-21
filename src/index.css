@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(
+    135deg,
+    #050816,
+    #0f172a,
+    #1e1b4b
+  );
+
+  min-height: 100vh;
+
+  font-family: 'Poppins', sans-serif;
+
+  overflow: hidden;
+
+  color: white;
+}
+
+/* CENTER CONTAINER */
+
+div {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+}
+
+/* TITLE */
+
+h1 {
+  font-size: 55px;
+
+  margin-bottom: 35px;
+
+  letter-spacing: 4px;
+
+  text-transform: uppercase;
+
+  background: linear-gradient(
+    90deg,
+    #8b5cf6,
+    #06b6d4,
+    #ec4899
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 10px rgba(139, 92, 246, 0.6),
+    0 0 20px rgba(6, 182, 212, 0.4);
+
+  animation: glow 3s infinite alternate;
+}
+
+/* INPUTS */
+
+input,
+textarea {
+  width: 320px;
+
+  margin: 12px;
+
+  padding: 14px 18px;
+
+  border-radius: 16px;
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  background: rgba(255,255,255,0.05);
+
+  backdrop-filter: blur(12px);
+
+  color: white;
+
+  font-size: 15px;
+
+  outline: none;
+
+  transition: 0.3s ease;
+}
+
+/* PLACEHOLDER */
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+/* INPUT FOCUS */
+
+input:focus,
+textarea:focus {
+  border: 1px solid #8b5cf6;
+
+  box-shadow:
+    0 0 15px rgba(139, 92, 246, 0.5);
+
+  transform: scale(1.03);
+}
+
+/* BUTTON */
+
+button {
+  margin-top: 20px;
+
+  padding: 14px 28px;
+
+  border: none;
+
+  border-radius: 16px;
+
+  background: linear-gradient(
+    90deg,
+    #8b5cf6,
+    #06b6d4
+  );
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+
+  box-shadow:
+    0 0 20px rgba(139, 92, 246, 0.4);
+}
+
+/* BUTTON HOVER */
+
+button:hover {
+  transform: translateY(-3px) scale(1.05);
+
+  box-shadow:
+    0 0 25px rgba(6, 182, 212, 0.7);
+}
+
+/* PARAGRAPH */
+
+p {
+  margin-top: 15px;
+
+  color: rgba(255,255,255,0.7);
+
+  font-size: 18px;
+}
+
+/* GLOW ANIMATION */
+
+@keyframes glow {
+  from {
+    filter: drop-shadow(0 0 10px #8b5cf6);
+  }
+
+  to {
+    filter: drop-shadow(0 0 25px #06b6d4);
+  }
+}
