@@ -9,7 +9,8 @@ import {
 
 function Gallery() {
 
-  const [gallery, setGallery] = useState(null);
+  const [gallery, setGallery] =
+    useState(null);
 
   const [currentIndex, setCurrentIndex] =
     useState(0);
@@ -65,7 +66,9 @@ function Gallery() {
         data.username === username &&
         data.password === password
       ) {
+
         setGallery(data);
+
       }
 
     });
@@ -75,6 +78,7 @@ function Gallery() {
   if (!gallery) {
 
     return (
+
       <div
         style={{
           background: "black",
@@ -88,11 +92,13 @@ function Gallery() {
       >
         Invalid Login
       </div>
+
     );
 
   }
 
   return (
+
     <div
       style={{
         background: "black",
@@ -103,11 +109,17 @@ function Gallery() {
       }}
     >
 
+      {/* STORY BARS */}
+
       <div
         style={{
           display: "flex",
           gap: "5px",
-          padding: "15px"
+          padding: "15px",
+          position: "absolute",
+          top: "0",
+          width: "100%",
+          zIndex: 10
         }}
       >
 
@@ -119,26 +131,96 @@ function Gallery() {
               flex: 1,
               height: "5px",
               background:
-                index <= currentIndex
-                  ? "white"
-                  : "gray",
-              borderRadius: "10px"
+                "rgba(255,255,255,0.3)",
+              borderRadius: "10px",
+              overflow: "hidden"
             }}
-          />
+          >
+
+            <div
+              style={{
+                width:
+                  index < currentIndex
+                    ? "100%"
+                    : index === currentIndex
+                    ? "100%"
+                    : "0%",
+
+                height: "100%",
+
+                background: "white",
+
+                transition:
+                  index === currentIndex
+                    ? "width 3s linear"
+                    : "none"
+              }}
+            />
+
+          </div>
 
         ))}
 
       </div>
 
-      <img
-        src={gallery.images[currentIndex]}
-        alt=""
-        style={{
-          width: "100%",
-          height: "100vh",
-          objectFit: "contain"
+      {/* IMAGE CLICK AREA */}
+
+      <div
+        onClick={(e) => {
+
+          const screenWidth =
+            window.innerWidth;
+
+          const clickX =
+            e.clientX;
+
+          if (
+            clickX > screenWidth / 2
+          ) {
+
+            setCurrentIndex((prev) =>
+
+              prev ===
+              gallery.images.length - 1
+
+                ? 0
+
+                : prev + 1
+
+            );
+
+          } else {
+
+            setCurrentIndex((prev) =>
+
+              prev === 0
+
+                ? gallery.images.length - 1
+
+                : prev - 1
+
+            );
+
+          }
+
         }}
-      />
+      >
+
+        <img
+          src={
+            gallery.images[currentIndex]
+          }
+          alt=""
+          style={{
+            width: "100%",
+            height: "100vh",
+            objectFit: "contain"
+          }}
+        />
+
+      </div>
+
+      {/* MESSAGE BOX */}
 
       <div
         style={{
@@ -148,13 +230,19 @@ function Gallery() {
           background:
             "rgba(0,0,0,0.6)",
           padding: "15px",
-          borderRadius: "15px"
+          borderRadius: "15px",
+          backdropFilter:
+            "blur(10px)"
         }}
       >
 
-        <h2>Your Secret Gallery</h2>
+        <h2>
+          Your Secret Gallery
+        </h2>
 
-        <p>{gallery.message}</p>
+        <p>
+          {gallery.message}
+        </p>
 
         <audio controls>
           <source
@@ -163,7 +251,8 @@ function Gallery() {
           />
         </audio>
 
-        <br /><br />
+        <br />
+        <br />
 
         <textarea
           placeholder="Leave your feedback..."
@@ -171,14 +260,18 @@ function Gallery() {
             width: "250px",
             height: "80px",
             padding: "10px",
-            borderRadius: "10px"
+            borderRadius: "10px",
+            border: "none",
+            outline: "none"
           }}
         />
 
       </div>
 
     </div>
+
   );
+
 }
 
 export default Gallery;
