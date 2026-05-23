@@ -87,7 +87,7 @@ function Gallery() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          fontSize: "30px"
+          fontSize: "24px"
         }}
       >
         Invalid Login
@@ -131,23 +131,23 @@ function Gallery() {
     <div
       style={{
         background: "black",
-        minHeight: "100vh",
-        color: "white",
+        width: "100%",
+        height: "100vh",
         overflow: "hidden",
         position: "relative"
       }}
     >
 
-      {/* STORY BARS */}
+      {/* TOP STORY BARS */}
 
       <div
         style={{
+          position: "absolute",
+          top: "10px",
+          left: "10px",
+          right: "10px",
           display: "flex",
           gap: "5px",
-          padding: "15px",
-          position: "absolute",
-          top: "0",
-          width: "100%",
           zIndex: 10
         }}
       >
@@ -158,7 +158,7 @@ function Gallery() {
             key={index}
             style={{
               flex: 1,
-              height: "5px",
+              height: "4px",
               background:
                 "rgba(255,255,255,0.3)",
               borderRadius: "10px",
@@ -194,19 +194,19 @@ function Gallery() {
         onClick={prevImage}
         style={{
           position: "absolute",
-          left: "20px",
+          left: "10px",
           top: "50%",
           transform:
             "translateY(-50%)",
           zIndex: 20,
-          fontSize: "30px",
+          width: "45px",
+          height: "45px",
+          borderRadius: "50%",
+          border: "none",
           background:
             "rgba(0,0,0,0.5)",
           color: "white",
-          border: "none",
-          borderRadius: "50%",
-          width: "60px",
-          height: "60px",
+          fontSize: "22px",
           cursor: "pointer"
         }}
       >
@@ -219,19 +219,19 @@ function Gallery() {
         onClick={nextImage}
         style={{
           position: "absolute",
-          right: "20px",
+          right: "10px",
           top: "50%",
           transform:
             "translateY(-50%)",
           zIndex: 20,
-          fontSize: "30px",
+          width: "45px",
+          height: "45px",
+          borderRadius: "50%",
+          border: "none",
           background:
             "rgba(0,0,0,0.5)",
           color: "white",
-          border: "none",
-          borderRadius: "50%",
-          width: "60px",
-          height: "60px",
+          fontSize: "22px",
           cursor: "pointer"
         }}
       >
@@ -248,7 +248,7 @@ function Gallery() {
         style={{
           width: "100%",
           height: "100vh",
-          objectFit: "contain"
+          objectFit: "cover"
         }}
       />
 
@@ -257,34 +257,51 @@ function Gallery() {
       <div
         style={{
           position: "absolute",
-          bottom: "40px",
-          left: "20px",
+          bottom: "20px",
+          left: "50%",
+          transform:
+            "translateX(-50%)",
+          width: "90%",
+          maxWidth: "400px",
           background:
-            "rgba(0,0,0,0.6)",
-          padding: "15px",
-          borderRadius: "15px",
+            "rgba(0,0,0,0.55)",
           backdropFilter:
-            "blur(10px)"
+            "blur(10px)",
+          padding: "15px",
+          borderRadius: "20px",
+          color: "white"
         }}
       >
 
-        <h2>
+        <h2
+          style={{
+            marginBottom: "10px",
+            fontSize: "22px"
+          }}
+        >
           Your Secret Gallery
         </h2>
 
-        <p>
+        <p
+          style={{
+            marginBottom: "15px",
+            fontSize: "14px",
+            lineHeight: "1.5"
+          }}
+        >
           {gallery.message}
         </p>
 
         <textarea
           placeholder="Leave your feedback..."
           style={{
-            width: "250px",
+            width: "100%",
             height: "80px",
-            padding: "10px",
-            borderRadius: "10px",
+            borderRadius: "12px",
             border: "none",
-            outline: "none"
+            outline: "none",
+            padding: "10px",
+            resize: "none"
           }}
         />
 
