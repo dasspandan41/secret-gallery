@@ -156,6 +156,25 @@ function Gallery() {
 
         <p>{gallery.message}</p>
 
+        <audio controls>
+          <source
+            src="YOUR_MUSIC_LINK_HERE"
+            type="audio/mp3"
+          />
+        </audio>
+
+        <br /><br />
+
+        <textarea
+          placeholder="Leave your feedback..."
+          style={{
+            width: "250px",
+            height: "80px",
+            padding: "10px",
+            borderRadius: "10px"
+          }}
+        />
+
       </div>
 
     </div>
@@ -163,7 +182,3 @@ function Gallery() {
 }
 
 export default Gallery;
-<audio controls>
-  <source src={musicUrl} type="audio/mp3" />
-</audio>
-<textarea placeholder="Leave your feedback..." />
