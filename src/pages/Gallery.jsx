@@ -163,3 +163,7 @@ function Gallery() {
 }
 
 export default Gallery;
+<audio controls>
+  <source src={musicUrl} type="audio/mp3" />
+</audio>
+<textarea placeholder="Leave your feedback..." />

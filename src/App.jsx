@@ -28,7 +28,7 @@ function App() {
         />
 
         <Route
-          path="/admin"
+          path="/dasspandan41-secret-upload-x7"
           element={<Admin />}
         />
 
