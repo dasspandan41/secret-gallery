@@ -33,21 +33,21 @@ function Gallery() {
 
     const interval = setInterval(() => {
 
-      setCurrentIndex((prev) => {
+      setCurrentIndex((prev) =>
 
-        if (
-          prev === gallery.images.length - 1
-        ) {
-          return 0;
-        }
+        prev ===
+        gallery.images.length - 1
 
-        return prev + 1;
+          ? 0
 
-      });
+          : prev + 1
+
+      );
 
     }, 3000);
 
-    return () => clearInterval(interval);
+    return () =>
+      clearInterval(interval);
 
   }, [gallery]);
 
@@ -97,6 +97,35 @@ function Gallery() {
 
   }
 
+  const nextImage = () => {
+
+    setCurrentIndex((prev) =>
+
+      prev ===
+      gallery.images.length - 1
+
+        ? 0
+
+        : prev + 1
+
+    );
+
+  };
+
+  const prevImage = () => {
+
+    setCurrentIndex((prev) =>
+
+      prev === 0
+
+        ? gallery.images.length - 1
+
+        : prev - 1
+
+    );
+
+  };
+
   return (
 
     <div
@@ -140,9 +169,7 @@ function Gallery() {
             <div
               style={{
                 width:
-                  index < currentIndex
-                    ? "100%"
-                    : index === currentIndex
+                  index <= currentIndex
                     ? "100%"
                     : "0%",
 
@@ -151,9 +178,7 @@ function Gallery() {
                 background: "white",
 
                 transition:
-                  index === currentIndex
-                    ? "width 3s linear"
-                    : "none"
+                  "width 3s linear"
               }}
             />
 
@@ -163,62 +188,69 @@ function Gallery() {
 
       </div>
 
-      {/* IMAGE CLICK AREA */}
+      {/* LEFT BUTTON */}
 
-      <div
-        onClick={(e) => {
-
-          const screenWidth =
-            window.innerWidth;
-
-          const clickX =
-            e.clientX;
-
-          if (
-            clickX > screenWidth / 2
-          ) {
-
-            setCurrentIndex((prev) =>
-
-              prev ===
-              gallery.images.length - 1
-
-                ? 0
-
-                : prev + 1
-
-            );
-
-          } else {
-
-            setCurrentIndex((prev) =>
-
-              prev === 0
-
-                ? gallery.images.length - 1
-
-                : prev - 1
-
-            );
-
-          }
-
+      <button
+        onClick={prevImage}
+        style={{
+          position: "absolute",
+          left: "20px",
+          top: "50%",
+          transform:
+            "translateY(-50%)",
+          zIndex: 20,
+          fontSize: "30px",
+          background:
+            "rgba(0,0,0,0.5)",
+          color: "white",
+          border: "none",
+          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          cursor: "pointer"
         }}
       >
+        ←
+      </button>
 
-        <img
-          src={
-            gallery.images[currentIndex]
-          }
-          alt=""
-          style={{
-            width: "100%",
-            height: "100vh",
-            objectFit: "contain"
-          }}
-        />
+      {/* RIGHT BUTTON */}
 
-      </div>
+      <button
+        onClick={nextImage}
+        style={{
+          position: "absolute",
+          right: "20px",
+          top: "50%",
+          transform:
+            "translateY(-50%)",
+          zIndex: 20,
+          fontSize: "30px",
+          background:
+            "rgba(0,0,0,0.5)",
+          color: "white",
+          border: "none",
+          borderRadius: "50%",
+          width: "60px",
+          height: "60px",
+          cursor: "pointer"
+        }}
+      >
+        →
+      </button>
+
+      {/* IMAGE */}
+
+      <img
+        src={
+          gallery.images[currentIndex]
+        }
+        alt=""
+        style={{
+          width: "100%",
+          height: "100vh",
+          objectFit: "contain"
+        }}
+      />
 
       {/* MESSAGE BOX */}
 
@@ -243,16 +275,6 @@ function Gallery() {
         <p>
           {gallery.message}
         </p>
-
-        <audio controls>
-          <source
-            src="YOUR_MUSIC_LINK_HERE"
-            type="audio/mp3"
-          />
-        </audio>
-
-        <br />
-        <br />
 
         <textarea
           placeholder="Leave your feedback..."
