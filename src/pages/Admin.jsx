@@ -2,68 +2,157 @@ import { useState } from "react";
 
 import axios from "axios";
 
-import { CLOUD_NAME, UPLOAD_PRESET } from "../cloudinary";
+import {
+  CLOUD_NAME,
+  UPLOAD_PRESET
+} from "../cloudinary";
 
 import { db } from "../firebase";
 
 import {
   collection,
-  addDoc
+  addDoc,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  doc
 } from "firebase/firestore";
 
 function Admin() {
 
-  const [username, setUsername] = useState("");
+  const [username, setUsername] =
+    useState("");
 
-  const [password, setPassword] = useState("");
+  const [password, setPassword] =
+    useState("");
 
-  const [message, setMessage] = useState("");
+  const [message, setMessage] =
+    useState("");
 
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] =
+    useState([]);
 
   const uploadGallery = async () => {
 
     try {
 
       if (!username || !password) {
-        alert("Enter username and password");
+
+        alert(
+          "Enter username and password"
+        );
+
         return;
+
       }
 
       let uploadedImages = [];
 
-      for (let i = 0; i < files.length; i++) {
+      for (
+        let i = 0;
+        i < files.length;
+        i++
+      ) {
 
-        const formData = new FormData();
+        const formData =
+          new FormData();
 
-        formData.append("file", files[i]);
+        formData.append(
+          "file",
+          files[i]
+        );
 
         formData.append(
           "upload_preset",
           UPLOAD_PRESET
         );
 
-        const response = await axios.post(
-          `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-          formData
-        );
+        const response =
+          await axios.post(
+            `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+            formData
+          );
 
         uploadedImages.push(
           response.data.secure_url
         );
+
       }
 
-      await addDoc(
-        collection(db, "galleries"),
-        {
-          username,
-          password,
-          message,
-          images: uploadedImages
-        }
+      const galleryRef =
+        collection(
+          db,
+          "galleries"
+        );
+
+      const q = query(
+        galleryRef,
+        where(
+          "username",
+          "==",
+          username
+        ),
+        where(
+          "password",
+          "==",
+          password
+        )
       );
 
-      alert("Gallery Uploaded Successfully");
+      const existingGallery =
+        await getDocs(q);
+
+      if (
+        !existingGallery.empty
+      ) {
+
+        const galleryDoc =
+          existingGallery.docs[0];
+
+        const oldImages =
+          galleryDoc.data()
+            .images || [];
+
+        const updatedImages = [
+          ...oldImages,
+          ...uploadedImages
+        ];
+
+        await updateDoc(
+          doc(
+            db,
+            "galleries",
+            galleryDoc.id
+          ),
+          {
+            images:
+              updatedImages,
+            message
+          }
+        );
+
+      } else {
+
+        await addDoc(
+          collection(
+            db,
+            "galleries"
+          ),
+          {
+            username,
+            password,
+            message,
+            images:
+              uploadedImages
+          }
+        );
+
+      }
+
+      alert(
+        "Gallery Uploaded Successfully"
+      );
 
     } catch (error) {
 
@@ -72,9 +161,11 @@ function Admin() {
       alert("Upload Failed");
 
     }
+
   };
 
   return (
+
     <div
       style={{
         background: "black",
@@ -83,14 +174,19 @@ function Admin() {
         padding: "40px"
       }}
     >
-      <h1>ADMIN PANEL</h1>
+
+      <h1>
+        ADMIN PANEL
+      </h1>
 
       <input
         type="text"
         placeholder="Assign Username"
         value={username}
         onChange={(e) =>
-          setUsername(e.target.value)
+          setUsername(
+            e.target.value
+          )
         }
         style={{
           padding: "10px",
@@ -105,7 +201,9 @@ function Admin() {
         placeholder="Assign Password"
         value={password}
         onChange={(e) =>
-          setPassword(e.target.value)
+          setPassword(
+            e.target.value
+          )
         }
         style={{
           padding: "10px",
@@ -119,7 +217,9 @@ function Admin() {
         placeholder="Custom Message"
         value={message}
         onChange={(e) =>
-          setMessage(e.target.value)
+          setMessage(
+            e.target.value
+          )
         }
         style={{
           padding: "10px",
@@ -134,7 +234,9 @@ function Admin() {
         type="file"
         multiple
         onChange={(e) =>
-          setFiles(e.target.files)
+          setFiles(
+            e.target.files
+          )
         }
         style={{
           marginTop: "20px",
@@ -143,10 +245,13 @@ function Admin() {
       />
 
       <button
-        onClick={uploadGallery}
+        onClick={
+          uploadGallery
+        }
         style={{
           marginTop: "20px",
-          padding: "12px 20px",
+          padding:
+            "12px 20px",
           cursor: "pointer"
         }}
       >
@@ -154,7 +259,9 @@ function Admin() {
       </button>
 
     </div>
+
   );
+
 }
 
 export default Admin;
