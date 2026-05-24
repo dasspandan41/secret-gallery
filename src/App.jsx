@@ -10,8 +10,6 @@ import Gallery from "./pages/Gallery";
 
 import Admin from "./pages/Admin";
 
-import Feedbacks from "./pages/Feedbacks";
-
 function App() {
 
   return (
@@ -33,11 +31,6 @@ function App() {
         <Route
           path="/dasspandan41-secret-upload-x7"
           element={<Admin />}
-        />
-
-        <Route
-          path="/feedbacks"
-          element={<Feedbacks />}
         />
 
       </Routes>

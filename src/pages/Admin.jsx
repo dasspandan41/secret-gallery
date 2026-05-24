@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import axios from "axios";
 
@@ -30,8 +30,43 @@ function Admin() {
   const [message, setMessage] =
     useState("");
 
+  const [music, setMusic] =
+    useState("");
+
   const [files, setFiles] =
     useState([]);
+
+  const [feedbacks, setFeedbacks] =
+    useState([]);
+
+  useEffect(() => {
+
+    fetchFeedbacks();
+
+  }, []);
+
+  const fetchFeedbacks = async () => {
+
+    const querySnapshot =
+      await getDocs(
+        collection(db, "feedbacks")
+      );
+
+    let feedbackArray = [];
+
+    querySnapshot.forEach((doc) => {
+
+      feedbackArray.push(
+        doc.data()
+      );
+
+    });
+
+    setFeedbacks(
+      feedbackArray
+    );
+
+  };
 
   const uploadGallery = async () => {
 
@@ -128,7 +163,8 @@ function Admin() {
           {
             images:
               updatedImages,
-            message
+            message,
+            music
           }
         );
 
@@ -143,6 +179,7 @@ function Admin() {
             username,
             password,
             message,
+            music,
             images:
               uploadedImages
           }
@@ -178,6 +215,8 @@ function Admin() {
       <h1>
         ADMIN PANEL
       </h1>
+
+      {/* UPLOAD SECTION */}
 
       <input
         type="text"
@@ -231,6 +270,23 @@ function Admin() {
       />
 
       <input
+        type="text"
+        placeholder="Paste Music URL"
+        value={music}
+        onChange={(e) =>
+          setMusic(
+            e.target.value
+          )
+        }
+        style={{
+          padding: "10px",
+          marginTop: "20px",
+          display: "block",
+          width: "300px"
+        }}
+      />
+
+      <input
         type="file"
         multiple
         onChange={(e) =>
@@ -257,6 +313,53 @@ function Admin() {
       >
         Upload Gallery
       </button>
+
+      {/* FEEDBACK SECTION */}
+
+      <h2
+        style={{
+          marginTop: "60px"
+        }}
+      >
+        USER FEEDBACKS
+      </h2>
+
+      {feedbacks.length === 0 ? (
+
+        <p>
+          No feedback yet
+        </p>
+
+      ) : (
+
+        feedbacks.map(
+          (item, index) => (
+
+            <div
+              key={index}
+              style={{
+                background:
+                  "#111",
+                padding: "20px",
+                marginTop: "20px",
+                borderRadius: "15px"
+              }}
+            >
+
+              <h3>
+                {item.username}
+              </h3>
+
+              <p>
+                {item.feedback}
+              </p>
+
+            </div>
+
+          )
+        )
+
+      )}
 
     </div>
 
