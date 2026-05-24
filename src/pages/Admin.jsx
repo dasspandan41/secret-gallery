@@ -27,6 +27,12 @@ function Admin() {
   const [password, setPassword] =
     useState("");
 
+  const [title, setTitle] =
+    useState("");
+
+  const [profilePhoto, setProfilePhoto] =
+    useState("");
+
   const [message, setMessage] =
     useState("");
 
@@ -161,10 +167,12 @@ function Admin() {
             galleryDoc.id
           ),
           {
-            images:
-              updatedImages,
+            title,
+            profilePhoto,
             message,
-            music
+            music,
+            images:
+              updatedImages
           }
         );
 
@@ -178,6 +186,8 @@ function Admin() {
           {
             username,
             password,
+            title,
+            profilePhoto,
             message,
             music,
             images:
@@ -212,11 +222,13 @@ function Admin() {
       }}
     >
 
-      <h1>
+      <h1
+        style={{
+          marginBottom: "30px"
+        }}
+      >
         ADMIN PANEL
       </h1>
-
-      {/* UPLOAD SECTION */}
 
       <input
         type="text"
@@ -228,10 +240,12 @@ function Admin() {
           )
         }
         style={{
-          padding: "10px",
-          marginTop: "20px",
+          padding: "12px",
+          marginTop: "15px",
           display: "block",
-          width: "300px"
+          width: "320px",
+          borderRadius: "10px",
+          border: "none"
         }}
       />
 
@@ -245,10 +259,50 @@ function Admin() {
           )
         }
         style={{
-          padding: "10px",
-          marginTop: "20px",
+          padding: "12px",
+          marginTop: "15px",
           display: "block",
-          width: "300px"
+          width: "320px",
+          borderRadius: "10px",
+          border: "none"
+        }}
+      />
+
+      <input
+        type="text"
+        placeholder="Gallery Title"
+        value={title}
+        onChange={(e) =>
+          setTitle(
+            e.target.value
+          )
+        }
+        style={{
+          padding: "12px",
+          marginTop: "15px",
+          display: "block",
+          width: "320px",
+          borderRadius: "10px",
+          border: "none"
+        }}
+      />
+
+      <input
+        type="text"
+        placeholder="Profile Photo URL"
+        value={profilePhoto}
+        onChange={(e) =>
+          setProfilePhoto(
+            e.target.value
+          )
+        }
+        style={{
+          padding: "12px",
+          marginTop: "15px",
+          display: "block",
+          width: "320px",
+          borderRadius: "10px",
+          border: "none"
         }}
       />
 
@@ -261,11 +315,13 @@ function Admin() {
           )
         }
         style={{
-          padding: "10px",
-          marginTop: "20px",
+          padding: "12px",
+          marginTop: "15px",
           display: "block",
-          width: "300px",
-          height: "120px"
+          width: "320px",
+          height: "120px",
+          borderRadius: "10px",
+          border: "none"
         }}
       />
 
@@ -279,10 +335,12 @@ function Admin() {
           )
         }
         style={{
-          padding: "10px",
-          marginTop: "20px",
+          padding: "12px",
+          marginTop: "15px",
           display: "block",
-          width: "300px"
+          width: "320px",
+          borderRadius: "10px",
+          border: "none"
         }}
       />
 
@@ -305,10 +363,13 @@ function Admin() {
           uploadGallery
         }
         style={{
-          marginTop: "20px",
+          marginTop: "25px",
           padding:
-            "12px 20px",
-          cursor: "pointer"
+            "14px 22px",
+          cursor: "pointer",
+          borderRadius: "10px",
+          border: "none",
+          fontWeight: "bold"
         }}
       >
         Upload Gallery
@@ -318,7 +379,7 @@ function Admin() {
 
       <h2
         style={{
-          marginTop: "60px"
+          marginTop: "70px"
         }}
       >
         USER FEEDBACKS
@@ -342,7 +403,8 @@ function Admin() {
                   "#111",
                 padding: "20px",
                 marginTop: "20px",
-                borderRadius: "15px"
+                borderRadius: "15px",
+                maxWidth: "500px"
               }}
             >
 

@@ -1,4 +1,8 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  useRef
+} from "react";
 
 import { db } from "../firebase";
 
@@ -18,6 +22,10 @@ function Gallery() {
 
   const [feedback, setFeedback] =
     useState("");
+
+  const touchStartX = useRef(0);
+
+  const touchEndX = useRef(0);
 
   const username =
     localStorage.getItem("username");
@@ -100,28 +108,6 @@ function Gallery() {
 
     };
 
-  if (!gallery) {
-
-    return (
-
-      <div
-        style={{
-          background: "black",
-          color: "white",
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontSize: "24px"
-        }}
-      >
-        Invalid Login
-      </div>
-
-    );
-
-  }
-
   const nextImage = () => {
 
     setCurrentIndex((prev) =>
@@ -151,9 +137,67 @@ function Gallery() {
 
   };
 
+  const handleTouchStart = (e) => {
+
+    touchStartX.current =
+      e.changedTouches[0].screenX;
+
+  };
+
+  const handleTouchEnd = (e) => {
+
+    touchEndX.current =
+      e.changedTouches[0].screenX;
+
+    if (
+      touchStartX.current -
+        touchEndX.current >
+      50
+    ) {
+
+      nextImage();
+
+    }
+
+    if (
+      touchEndX.current -
+        touchStartX.current >
+      50
+    ) {
+
+      prevImage();
+
+    }
+
+  };
+
+  if (!gallery) {
+
+    return (
+
+      <div
+        style={{
+          background: "black",
+          color: "white",
+          minHeight: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "24px"
+        }}
+      >
+        Invalid Login
+      </div>
+
+    );
+
+  }
+
   return (
 
     <div
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       style={{
         background: "black",
         width: "100%",
@@ -163,12 +207,51 @@ function Gallery() {
       }}
     >
 
+      {/* PROFILE HEADER */}
+
+      <div
+        style={{
+          position: "absolute",
+          top: "25px",
+          left: "15px",
+          zIndex: 20,
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          color: "white"
+        }}
+      >
+
+        {gallery.profilePhoto && (
+
+          <img
+            src={gallery.profilePhoto}
+            alt=""
+            style={{
+              width: "50px",
+              height: "50px",
+              borderRadius: "50%",
+              objectFit: "cover",
+              border:
+                "2px solid white"
+            }}
+          />
+
+        )}
+
+        <h2>
+          {gallery.title ||
+            "Your Secret Gallery"}
+        </h2>
+
+      </div>
+
       {/* STORY BARS */}
 
       <div
         style={{
           position: "absolute",
-          top: "10px",
+          top: "90px",
           left: "10px",
           right: "10px",
           display: "flex",
@@ -273,7 +356,10 @@ function Gallery() {
         style={{
           width: "100%",
           height: "100vh",
-          objectFit: "cover"
+          objectFit: "cover",
+          transition:
+            "opacity 0.7s ease, transform 3s ease",
+          transform: "scale(1.05)"
         }}
       />
 
@@ -298,13 +384,28 @@ function Gallery() {
         }}
       >
 
-        <h2>
-          Your Secret Gallery
-        </h2>
-
         <p>
           {gallery.message}
         </p>
+
+        {gallery.music && (
+
+          <audio
+            controls
+            autoPlay
+            loop
+            style={{
+              width: "100%",
+              marginTop: "10px"
+            }}
+          >
+            <source
+              src={gallery.music}
+              type="audio/mp3"
+            />
+          </audio>
+
+        )}
 
         <textarea
           placeholder="Leave your feedback..."
@@ -321,7 +422,8 @@ function Gallery() {
             border: "none",
             outline: "none",
             padding: "10px",
-            resize: "none"
+            resize: "none",
+            marginTop: "15px"
           }}
         />
 
