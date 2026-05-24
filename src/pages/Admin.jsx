@@ -215,218 +215,290 @@ function Admin() {
 
     <div
       style={{
-        background: "black",
+        background:
+          "linear-gradient(to bottom, #000, #111)",
         minHeight: "100vh",
         color: "white",
-        padding: "40px"
+        padding: "40px",
+        position: "relative",
+        overflow: "hidden"
       }}
     >
 
-      <h1
+      {/* FLOATING PARTICLES */}
+
+      <div
         style={{
-          marginBottom: "30px"
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          top: 0,
+          left: 0,
+          overflow: "hidden",
+          zIndex: 0
         }}
       >
-        ADMIN PANEL
-      </h1>
 
-      <input
-        type="text"
-        placeholder="Assign Username"
-        value={username}
-        onChange={(e) =>
-          setUsername(
-            e.target.value
-          )
-        }
-        style={{
-          padding: "12px",
-          marginTop: "15px",
-          display: "block",
-          width: "320px",
-          borderRadius: "10px",
-          border: "none"
-        }}
-      />
+        {[...Array(40)].map((_, i) => (
 
-      <input
-        type="password"
-        placeholder="Assign Password"
-        value={password}
-        onChange={(e) =>
-          setPassword(
-            e.target.value
-          )
-        }
-        style={{
-          padding: "12px",
-          marginTop: "15px",
-          display: "block",
-          width: "320px",
-          borderRadius: "10px",
-          border: "none"
-        }}
-      />
+          <div
+            key={i}
+            style={{
+              position: "absolute",
+              width: "4px",
+              height: "4px",
+              background: "white",
+              borderRadius: "50%",
+              opacity: 0.4,
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animation: `float ${
+                5 + Math.random() * 10
+              }s linear infinite`
+            }}
+          />
 
-      <input
-        type="text"
-        placeholder="Gallery Title"
-        value={title}
-        onChange={(e) =>
-          setTitle(
-            e.target.value
-          )
-        }
-        style={{
-          padding: "12px",
-          marginTop: "15px",
-          display: "block",
-          width: "320px",
-          borderRadius: "10px",
-          border: "none"
-        }}
-      />
+        ))}
 
-      <input
-        type="text"
-        placeholder="Profile Photo URL"
-        value={profilePhoto}
-        onChange={(e) =>
-          setProfilePhoto(
-            e.target.value
-          )
-        }
-        style={{
-          padding: "12px",
-          marginTop: "15px",
-          display: "block",
-          width: "320px",
-          borderRadius: "10px",
-          border: "none"
-        }}
-      />
+      </div>
 
-      <textarea
-        placeholder="Custom Message"
-        value={message}
-        onChange={(e) =>
-          setMessage(
-            e.target.value
-          )
-        }
-        style={{
-          padding: "12px",
-          marginTop: "15px",
-          display: "block",
-          width: "320px",
-          height: "120px",
-          borderRadius: "10px",
-          border: "none"
-        }}
-      />
+      {/* MAIN CONTENT */}
 
-      <input
-        type="text"
-        placeholder="Paste Music URL"
-        value={music}
-        onChange={(e) =>
-          setMusic(
-            e.target.value
-          )
-        }
+      <div
         style={{
-          padding: "12px",
-          marginTop: "15px",
-          display: "block",
-          width: "320px",
-          borderRadius: "10px",
-          border: "none"
-        }}
-      />
-
-      <input
-        type="file"
-        multiple
-        onChange={(e) =>
-          setFiles(
-            e.target.files
-          )
-        }
-        style={{
-          marginTop: "20px",
-          display: "block"
-        }}
-      />
-
-      <button
-        onClick={
-          uploadGallery
-        }
-        style={{
-          marginTop: "25px",
-          padding:
-            "14px 22px",
-          cursor: "pointer",
-          borderRadius: "10px",
-          border: "none",
-          fontWeight: "bold"
+          position: "relative",
+          zIndex: 10
         }}
       >
-        Upload Gallery
-      </button>
 
-      {/* FEEDBACK SECTION */}
+        <h1
+          style={{
+            marginBottom: "30px",
+            fontSize: "42px"
+          }}
+        >
+          ADMIN PANEL
+        </h1>
 
-      <h2
-        style={{
-          marginTop: "70px"
-        }}
-      >
-        USER FEEDBACKS
-      </h2>
+        <div
+          style={{
+            background:
+              "rgba(255,255,255,0.08)",
+            padding: "25px",
+            borderRadius: "20px",
+            backdropFilter:
+              "blur(10px)",
+            maxWidth: "400px"
+          }}
+        >
 
-      {feedbacks.length === 0 ? (
+          <input
+            type="text"
+            placeholder="Assign Username"
+            value={username}
+            onChange={(e) =>
+              setUsername(
+                e.target.value
+              )
+            }
+            style={inputStyle}
+          />
 
-        <p>
-          No feedback yet
-        </p>
+          <input
+            type="password"
+            placeholder="Assign Password"
+            value={password}
+            onChange={(e) =>
+              setPassword(
+                e.target.value
+              )
+            }
+            style={inputStyle}
+          />
 
-      ) : (
+          <input
+            type="text"
+            placeholder="Gallery Title"
+            value={title}
+            onChange={(e) =>
+              setTitle(
+                e.target.value
+              )
+            }
+            style={inputStyle}
+          />
 
-        feedbacks.map(
-          (item, index) => (
+          <input
+            type="text"
+            placeholder="Profile Photo URL"
+            value={profilePhoto}
+            onChange={(e) =>
+              setProfilePhoto(
+                e.target.value
+              )
+            }
+            style={inputStyle}
+          />
 
-            <div
-              key={index}
-              style={{
-                background:
-                  "#111",
-                padding: "20px",
-                marginTop: "20px",
-                borderRadius: "15px",
-                maxWidth: "500px"
-              }}
-            >
+          <textarea
+            placeholder="Custom Message"
+            value={message}
+            onChange={(e) =>
+              setMessage(
+                e.target.value
+              )
+            }
+            style={{
+              ...inputStyle,
+              height: "120px",
+              resize: "none"
+            }}
+          />
 
-              <h3>
-                {item.username}
-              </h3>
+          <input
+            type="text"
+            placeholder="Paste Music URL"
+            value={music}
+            onChange={(e) =>
+              setMusic(
+                e.target.value
+              )
+            }
+            style={inputStyle}
+          />
 
-              <p>
-                {item.feedback}
-              </p>
+          <input
+            type="file"
+            multiple
+            onChange={(e) =>
+              setFiles(
+                e.target.files
+              )
+            }
+            style={{
+              marginTop: "20px"
+            }}
+          />
 
-            </div>
+          <button
+            onClick={
+              uploadGallery
+            }
+            style={{
+              marginTop: "25px",
+              width: "100%",
+              padding: "14px",
+              borderRadius: "12px",
+              border: "none",
+              fontWeight: "bold",
+              fontSize: "16px",
+              cursor: "pointer",
+              background:
+                "white",
+              color: "black"
+            }}
+          >
+            Upload Gallery
+          </button>
 
+        </div>
+
+        {/* FEEDBACK SECTION */}
+
+        <h2
+          style={{
+            marginTop: "70px",
+            fontSize: "34px"
+          }}
+        >
+          USER FEEDBACKS
+        </h2>
+
+        {feedbacks.length === 0 ? (
+
+          <p>
+            No feedback yet
+          </p>
+
+        ) : (
+
+          feedbacks.map(
+            (item, index) => (
+
+              <div
+                key={index}
+                style={{
+                  background:
+                    "rgba(255,255,255,0.08)",
+                  padding: "20px",
+                  marginTop: "20px",
+                  borderRadius: "18px",
+                  maxWidth: "500px",
+                  backdropFilter:
+                    "blur(10px)"
+                }}
+              >
+
+                <h3>
+                  {item.username}
+                </h3>
+
+                <p>
+                  {item.feedback}
+                </p>
+
+              </div>
+
+            )
           )
-        )
 
-      )}
+        )}
+
+      </div>
+
+      <style>
+        {`
+
+          @keyframes float {
+
+            0% {
+
+              transform:
+                translateY(0px);
+
+            }
+
+            100% {
+
+              transform:
+                translateY(-100vh);
+
+            }
+
+          }
+
+        `}
+      </style>
 
     </div>
 
   );
 
 }
+
+const inputStyle = {
+
+  padding: "12px",
+  marginTop: "15px",
+  display: "block",
+  width: "100%",
+  borderRadius: "12px",
+  border: "none",
+  background:
+    "rgba(255,255,255,0.12)",
+  color: "white",
+  outline: "none"
+
+};
 
 export default Admin;
