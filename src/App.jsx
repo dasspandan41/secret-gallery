@@ -39,3 +39,7 @@ function App() {
 }
 
 export default App;
+<Route
+  path="/feedbacks"
+  element={<Feedbacks />}
+/>
