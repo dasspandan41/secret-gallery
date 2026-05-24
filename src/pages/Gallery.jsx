@@ -17,6 +17,12 @@ function Gallery() {
   const [gallery, setGallery] =
     useState(null);
 
+  const [loading, setLoading] =
+    useState(true);
+
+  const [liked, setLiked] =
+    useState(false);
+
   const [currentIndex, setCurrentIndex] =
     useState(0);
 
@@ -84,6 +90,12 @@ function Gallery() {
       }
 
     });
+
+    setTimeout(() => {
+
+      setLoading(false);
+
+    }, 1500);
 
   };
 
@@ -171,6 +183,32 @@ function Gallery() {
 
   };
 
+  if (loading) {
+
+    return (
+
+      <div
+        style={{
+          background: "black",
+          color: "white",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column"
+        }}
+      >
+
+        <h1>
+          Loading Gallery...
+        </h1>
+
+      </div>
+
+    );
+
+  }
+
   if (!gallery) {
 
     return (
@@ -246,6 +284,26 @@ function Gallery() {
 
       </div>
 
+      {/* HEART BUTTON */}
+
+      <button
+        onClick={() =>
+          setLiked(!liked)
+        }
+        style={{
+          position: "absolute",
+          top: "25px",
+          right: "20px",
+          zIndex: 30,
+          background: "none",
+          border: "none",
+          fontSize: "35px",
+          cursor: "pointer"
+        }}
+      >
+        {liked ? "❤️" : "🤍"}
+      </button>
+
       {/* STORY BARS */}
 
       <div
@@ -280,11 +338,8 @@ function Gallery() {
                   index <= currentIndex
                     ? "100%"
                     : "0%",
-
                 height: "100%",
-
                 background: "white",
-
                 transition:
                   "width 3s linear"
               }}
@@ -406,6 +461,50 @@ function Gallery() {
           </audio>
 
         )}
+
+        <button
+          onClick={() => {
+
+            document
+              .documentElement
+              .requestFullscreen();
+
+          }}
+          style={{
+            marginTop: "10px",
+            width: "100%",
+            padding: "10px",
+            borderRadius: "10px",
+            border: "none",
+            cursor: "pointer"
+          }}
+        >
+          Fullscreen Mode
+        </button>
+
+        <a
+          href={
+            gallery.images[currentIndex]
+          }
+          download
+          target="_blank"
+          rel="noreferrer"
+        >
+
+          <button
+            style={{
+              marginTop: "10px",
+              width: "100%",
+              padding: "10px",
+              borderRadius: "10px",
+              border: "none",
+              cursor: "pointer"
+            }}
+          >
+            Download Image
+          </button>
+
+        </a>
 
         <textarea
           placeholder="Leave your feedback..."
