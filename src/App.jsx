@@ -10,9 +10,12 @@ import Gallery from "./pages/Gallery";
 
 import Admin from "./pages/Admin";
 
+import Feedbacks from "./pages/Feedbacks";
+
 function App() {
 
   return (
+
     <BrowserRouter>
 
       <Routes>
@@ -32,14 +35,17 @@ function App() {
           element={<Admin />}
         />
 
+        <Route
+          path="/feedbacks"
+          element={<Feedbacks />}
+        />
+
       </Routes>
 
     </BrowserRouter>
+
   );
+
 }
 
 export default App;
-<Route
-  path="/feedbacks"
-  element={<Feedbacks />}
-/>
