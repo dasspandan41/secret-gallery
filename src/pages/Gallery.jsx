@@ -4,7 +4,8 @@ import { db } from "../firebase";
 
 import {
   collection,
-  getDocs
+  getDocs,
+  addDoc
 } from "firebase/firestore";
 
 function Gallery() {
@@ -14,6 +15,9 @@ function Gallery() {
 
   const [currentIndex, setCurrentIndex] =
     useState(0);
+
+  const [feedback, setFeedback] =
+    useState("");
 
   const username =
     localStorage.getItem("username");
@@ -74,6 +78,27 @@ function Gallery() {
     });
 
   };
+
+  const submitFeedback =
+    async () => {
+
+      if (!feedback) return;
+
+      await addDoc(
+        collection(db, "feedbacks"),
+        {
+          username,
+          feedback
+        }
+      );
+
+      alert(
+        "Feedback Submitted"
+      );
+
+      setFeedback("");
+
+    };
 
   if (!gallery) {
 
@@ -138,7 +163,7 @@ function Gallery() {
       }}
     >
 
-      {/* TOP STORY BARS */}
+      {/* STORY BARS */}
 
       <div
         style={{
@@ -273,27 +298,22 @@ function Gallery() {
         }}
       >
 
-        <h2
-          style={{
-            marginBottom: "10px",
-            fontSize: "22px"
-          }}
-        >
+        <h2>
           Your Secret Gallery
         </h2>
 
-        <p
-          style={{
-            marginBottom: "15px",
-            fontSize: "14px",
-            lineHeight: "1.5"
-          }}
-        >
+        <p>
           {gallery.message}
         </p>
 
         <textarea
           placeholder="Leave your feedback..."
+          value={feedback}
+          onChange={(e) =>
+            setFeedback(
+              e.target.value
+            )
+          }
           style={{
             width: "100%",
             height: "80px",
@@ -304,6 +324,21 @@ function Gallery() {
             resize: "none"
           }}
         />
+
+        <button
+          onClick={submitFeedback}
+          style={{
+            marginTop: "10px",
+            width: "100%",
+            padding: "12px",
+            border: "none",
+            borderRadius: "10px",
+            fontWeight: "bold",
+            cursor: "pointer"
+          }}
+        >
+          Submit Feedback
+        </button>
 
       </div>
 
