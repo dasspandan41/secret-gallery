@@ -202,9 +202,22 @@ function Gallery() {
         }}
       >
 
+        <img
+          src="https://kommodo.ai/i/vv32T6IXgCQWby0jpwXG"
+          alt=""
+          style={{
+            width: "110px",
+            height: "110px",
+            borderRadius: "25px",
+            marginBottom: "20px",
+            animation:
+              "pulse 2s infinite"
+          }}
+        />
+
         <h1
           style={{
-            fontSize: "40px",
+            fontSize: "42px",
             letterSpacing: "3px"
           }}
         >
@@ -219,6 +232,28 @@ function Gallery() {
         >
           Loading Memories...
         </p>
+
+        <style>
+          {`
+
+            @keyframes pulse {
+
+              0% {
+                transform: scale(1);
+              }
+
+              50% {
+                transform: scale(1.08);
+              }
+
+              100% {
+                transform: scale(1);
+              }
+
+            }
+
+          `}
+        </style>
 
       </div>
 
@@ -272,11 +307,13 @@ function Gallery() {
         style={{
           width: "100%",
           height: "100%",
-          objectFit: "cover"
+          objectFit: "cover",
+          transition:
+            "all 0.7s ease"
         }}
       />
 
-      {/* DARK OVERLAY */}
+      {/* OVERLAY */}
 
       <div
         style={{
@@ -336,17 +373,17 @@ function Gallery() {
           position: "absolute",
           top: "20px",
           right: "20px",
-          zIndex: 30,
+          zIndex: 20,
           background: "none",
           border: "none",
-          fontSize: "35px",
+          fontSize: "34px",
           cursor: "pointer"
         }}
       >
         {liked ? "❤️" : "🤍"}
       </button>
 
-      {/* STORY BARS */}
+      {/* STORY BAR */}
 
       <div
         style={{
@@ -369,7 +406,8 @@ function Gallery() {
               height: "4px",
               background:
                 "rgba(255,255,255,0.3)",
-              borderRadius: "10px"
+              borderRadius: "10px",
+              overflow: "hidden"
             }}
           >
 
@@ -410,16 +448,16 @@ function Gallery() {
         →
       </button>
 
-      {/* MESSAGE */}
+      {/* MESSAGE PANEL */}
 
       <div
         style={{
           position: "absolute",
-          bottom: "25px",
+          bottom: "20px",
           left: "50%",
           transform:
             "translateX(-50%)",
-          width: "90%",
+          width: "92%",
           maxWidth: "400px",
           zIndex: 30
         }}
@@ -430,14 +468,18 @@ function Gallery() {
             background:
               "rgba(0,0,0,0.45)",
             backdropFilter:
-              "blur(10px)",
-            padding: "15px",
+              "blur(12px)",
             borderRadius: "20px",
+            padding: "16px",
             color: "white"
           }}
         >
 
-          <p>
+          <p
+            style={{
+              lineHeight: "24px"
+            }}
+          >
             {gallery.message}
           </p>
 
@@ -449,7 +491,7 @@ function Gallery() {
               loop
               style={{
                 width: "100%",
-                marginTop: "10px"
+                marginTop: "12px"
               }}
             >
               <source
@@ -467,7 +509,7 @@ function Gallery() {
             style={smallButton}
           >
             {showPanel
-              ? "Close"
+              ? "Close Options"
               : "More Options"}
           </button>
 
@@ -485,7 +527,7 @@ function Gallery() {
                 }}
                 style={smallButton}
               >
-                Fullscreen
+                Fullscreen Mode
               </button>
 
               <a
@@ -500,7 +542,7 @@ function Gallery() {
                 <button
                   style={smallButton}
                 >
-                  Download
+                  Download Image
                 </button>
 
               </a>
@@ -520,8 +562,8 @@ function Gallery() {
                   border: "none",
                   outline: "none",
                   padding: "10px",
-                  marginTop: "10px",
-                  resize: "none"
+                  resize: "none",
+                  marginTop: "12px"
                 }}
               />
 
@@ -530,7 +572,8 @@ function Gallery() {
                 style={{
                   ...smallButton,
                   background: "white",
-                  color: "black"
+                  color: "black",
+                  fontWeight: "bold"
                 }}
               >
                 Submit Feedback
@@ -566,7 +609,9 @@ const navButtonLeft = {
     "rgba(255,255,255,0.2)",
   color: "white",
   fontSize: "24px",
-  cursor: "pointer"
+  cursor: "pointer",
+  backdropFilter:
+    "blur(10px)"
 
 };
 
@@ -586,7 +631,9 @@ const navButtonRight = {
     "rgba(255,255,255,0.2)",
   color: "white",
   fontSize: "24px",
-  cursor: "pointer"
+  cursor: "pointer",
+  backdropFilter:
+    "blur(10px)"
 
 };
 
@@ -594,10 +641,14 @@ const smallButton = {
 
   marginTop: "10px",
   width: "100%",
-  padding: "10px",
-  borderRadius: "10px",
+  padding: "11px",
+  borderRadius: "12px",
   border: "none",
-  cursor: "pointer"
+  cursor: "pointer",
+  background:
+    "rgba(255,255,255,0.18)",
+  color: "white",
+  fontWeight: "bold"
 
 };
 
