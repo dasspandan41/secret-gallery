@@ -98,7 +98,7 @@ function Gallery() {
 
       setLoading(false);
 
-    }, 2000);
+    }, 2500);
 
   };
 
@@ -186,6 +186,8 @@ function Gallery() {
 
   };
 
+  /* LOADING SCREEN */
+
   if (loading) {
 
     return (
@@ -204,12 +206,13 @@ function Gallery() {
 
         <img
           src="https://kommodo.ai/i/vv32T6IXgCQWby0jpwXG"
-          alt=""
+          alt="Logo"
           style={{
-            width: "110px",
-            height: "110px",
-            borderRadius: "25px",
-            marginBottom: "20px",
+            width: "130px",
+            height: "130px",
+            borderRadius: "30px",
+            objectFit: "cover",
+            marginBottom: "25px",
             animation:
               "pulse 2s infinite"
           }}
@@ -218,7 +221,8 @@ function Gallery() {
         <h1
           style={{
             fontSize: "42px",
-            letterSpacing: "3px"
+            letterSpacing: "3px",
+            marginBottom: "10px"
           }}
         >
           SECRET GALLERY
@@ -226,12 +230,35 @@ function Gallery() {
 
         <p
           style={{
-            opacity: 0.7,
-            marginTop: "10px"
+            opacity: 0.7
           }}
         >
           Loading Memories...
         </p>
+
+        <div
+          style={{
+            width: "220px",
+            height: "5px",
+            background:
+              "rgba(255,255,255,0.2)",
+            borderRadius: "20px",
+            marginTop: "25px",
+            overflow: "hidden"
+          }}
+        >
+
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              background: "white",
+              animation:
+                "loading 1.5s linear infinite"
+            }}
+          />
+
+        </div>
 
         <style>
           {`
@@ -248,6 +275,20 @@ function Gallery() {
 
               100% {
                 transform: scale(1);
+              }
+
+            }
+
+            @keyframes loading {
+
+              0% {
+                transform:
+                  translateX(-100%);
+              }
+
+              100% {
+                transform:
+                  translateX(100%);
               }
 
             }
@@ -307,9 +348,7 @@ function Gallery() {
         style={{
           width: "100%",
           height: "100%",
-          objectFit: "cover",
-          transition:
-            "all 0.7s ease"
+          objectFit: "cover"
         }}
       />
 
@@ -448,7 +487,7 @@ function Gallery() {
         →
       </button>
 
-      {/* MESSAGE PANEL */}
+      {/* BOTTOM PANEL */}
 
       <div
         style={{
@@ -475,11 +514,7 @@ function Gallery() {
           }}
         >
 
-          <p
-            style={{
-              lineHeight: "24px"
-            }}
-          >
+          <p>
             {gallery.message}
           </p>
 
@@ -609,9 +644,7 @@ const navButtonLeft = {
     "rgba(255,255,255,0.2)",
   color: "white",
   fontSize: "24px",
-  cursor: "pointer",
-  backdropFilter:
-    "blur(10px)"
+  cursor: "pointer"
 
 };
 
@@ -631,9 +664,7 @@ const navButtonRight = {
     "rgba(255,255,255,0.2)",
   color: "white",
   fontSize: "24px",
-  cursor: "pointer",
-  backdropFilter:
-    "blur(10px)"
+  cursor: "pointer"
 
 };
 
@@ -641,14 +672,10 @@ const smallButton = {
 
   marginTop: "10px",
   width: "100%",
-  padding: "11px",
-  borderRadius: "12px",
+  padding: "10px",
+  borderRadius: "10px",
   border: "none",
-  cursor: "pointer",
-  background:
-    "rgba(255,255,255,0.18)",
-  color: "white",
-  fontWeight: "bold"
+  cursor: "pointer"
 
 };
 
