@@ -23,6 +23,9 @@ function Gallery() {
   const [liked, setLiked] =
     useState(false);
 
+  const [showPanel, setShowPanel] =
+    useState(false);
+
   const [currentIndex, setCurrentIndex] =
     useState(0);
 
@@ -95,7 +98,7 @@ function Gallery() {
 
       setLoading(false);
 
-    }, 2500);
+    }, 2000);
 
   };
 
@@ -183,8 +186,6 @@ function Gallery() {
 
   };
 
-  /* SPLASH SCREEN */
-
   if (loading) {
 
     return (
@@ -197,30 +198,14 @@ function Gallery() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          flexDirection: "column",
-          overflow: "hidden"
+          flexDirection: "column"
         }}
       >
 
-        <img
-          src="https://i.ibb.co/6bQ7QYJ/logo.png"
-          alt=""
-          style={{
-            width: "120px",
-            height: "120px",
-            objectFit: "cover",
-            borderRadius: "30px",
-            marginBottom: "25px",
-            animation:
-              "pulse 2s infinite"
-          }}
-        />
-
         <h1
           style={{
-            fontSize: "38px",
-            letterSpacing: "3px",
-            marginBottom: "15px"
+            fontSize: "40px",
+            letterSpacing: "3px"
           }}
         >
           SECRET GALLERY
@@ -228,71 +213,12 @@ function Gallery() {
 
         <p
           style={{
-            opacity: 0.7
+            opacity: 0.7,
+            marginTop: "10px"
           }}
         >
-          Loading your memories...
+          Loading Memories...
         </p>
-
-        <div
-          style={{
-            width: "220px",
-            height: "5px",
-            background:
-              "rgba(255,255,255,0.2)",
-            borderRadius: "20px",
-            marginTop: "25px",
-            overflow: "hidden"
-          }}
-        >
-
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              background: "white",
-              animation:
-                "loading 1.5s linear infinite"
-            }}
-          />
-
-        </div>
-
-        <style>
-          {`
-
-            @keyframes pulse {
-
-              0% {
-                transform: scale(1);
-              }
-
-              50% {
-                transform: scale(1.08);
-              }
-
-              100% {
-                transform: scale(1);
-              }
-
-            }
-
-            @keyframes loading {
-
-              0% {
-                transform:
-                  translateX(-100%);
-              }
-
-              100% {
-                transform:
-                  translateX(100%);
-              }
-
-            }
-
-          `}
-        </style>
 
       </div>
 
@@ -308,7 +234,7 @@ function Gallery() {
         style={{
           background: "black",
           color: "white",
-          minHeight: "100vh",
+          height: "100vh",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -328,50 +254,13 @@ function Gallery() {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       style={{
-        background: "black",
         width: "100%",
         height: "100vh",
         overflow: "hidden",
-        position: "relative"
+        position: "relative",
+        background: "black"
       }}
     >
-
-      {/* PARTICLES */}
-
-      <div
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: "100%",
-          top: 0,
-          left: 0,
-          overflow: "hidden",
-          zIndex: 0
-        }}
-      >
-
-        {[...Array(40)].map((_, i) => (
-
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              width: "4px",
-              height: "4px",
-              background: "white",
-              borderRadius: "50%",
-              opacity: 0.4,
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animation: `float ${
-                5 + Math.random() * 10
-              }s linear infinite`
-            }}
-          />
-
-        ))}
-
-      </div>
 
       {/* IMAGE */}
 
@@ -381,13 +270,9 @@ function Gallery() {
         }
         alt=""
         style={{
-          position: "absolute",
           width: "100%",
-          height: "100vh",
-          objectFit: "cover",
-          transition:
-            "all 0.8s ease",
-          transform: "scale(1.05)"
+          height: "100%",
+          objectFit: "cover"
         }}
       />
 
@@ -398,7 +283,7 @@ function Gallery() {
           position: "absolute",
           inset: 0,
           background:
-            "rgba(0,0,0,0.35)"
+            "rgba(0,0,0,0.25)"
         }}
       />
 
@@ -412,7 +297,7 @@ function Gallery() {
           zIndex: 20,
           display: "flex",
           alignItems: "center",
-          gap: "12px",
+          gap: "10px",
           color: "white"
         }}
       >
@@ -423,8 +308,8 @@ function Gallery() {
             src={gallery.profilePhoto}
             alt=""
             style={{
-              width: "55px",
-              height: "55px",
+              width: "50px",
+              height: "50px",
               borderRadius: "50%",
               objectFit: "cover",
               border:
@@ -436,7 +321,7 @@ function Gallery() {
 
         <h2>
           {gallery.title ||
-            "Your Secret Gallery"}
+            "Secret Gallery"}
         </h2>
 
       </div>
@@ -449,7 +334,7 @@ function Gallery() {
         }
         style={{
           position: "absolute",
-          top: "25px",
+          top: "20px",
           right: "20px",
           zIndex: 30,
           background: "none",
@@ -466,7 +351,7 @@ function Gallery() {
       <div
         style={{
           position: "absolute",
-          top: "95px",
+          top: "90px",
           left: "10px",
           right: "10px",
           display: "flex",
@@ -484,8 +369,7 @@ function Gallery() {
               height: "4px",
               background:
                 "rgba(255,255,255,0.3)",
-              borderRadius: "10px",
-              overflow: "hidden"
+              borderRadius: "10px"
             }}
           >
 
@@ -526,138 +410,139 @@ function Gallery() {
         →
       </button>
 
-      {/* BOTTOM PANEL */}
+      {/* MESSAGE */}
 
       <div
         style={{
           position: "absolute",
-          bottom: "20px",
+          bottom: "25px",
           left: "50%",
           transform:
             "translateX(-50%)",
-          width: "92%",
-          maxWidth: "420px",
-          background:
-            "rgba(255,255,255,0.08)",
-          backdropFilter:
-            "blur(14px)",
-          padding: "18px",
-          borderRadius: "22px",
-          color: "white",
-          zIndex: 20
+          width: "90%",
+          maxWidth: "400px",
+          zIndex: 30
         }}
       >
 
-        <p>
-          {gallery.message}
-        </p>
-
-        {gallery.music && (
-
-          <audio
-            controls
-            autoPlay
-            loop
-            style={{
-              width: "100%",
-              marginTop: "12px"
-            }}
-          >
-            <source
-              src={gallery.music}
-              type="audio/mp3"
-            />
-          </audio>
-
-        )}
-
-        <button
-          onClick={() => {
-
-            document
-              .documentElement
-              .requestFullscreen();
-
+        <div
+          style={{
+            background:
+              "rgba(0,0,0,0.45)",
+            backdropFilter:
+              "blur(10px)",
+            padding: "15px",
+            borderRadius: "20px",
+            color: "white"
           }}
-          style={actionButton}
         >
-          Fullscreen Mode
-        </button>
 
-        <a
-          href={
-            gallery.images[currentIndex]
-          }
-          download
-          target="_blank"
-          rel="noreferrer"
-        >
+          <p>
+            {gallery.message}
+          </p>
+
+          {gallery.music && (
+
+            <audio
+              controls
+              autoPlay
+              loop
+              style={{
+                width: "100%",
+                marginTop: "10px"
+              }}
+            >
+              <source
+                src={gallery.music}
+                type="audio/mp3"
+              />
+            </audio>
+
+          )}
 
           <button
-            style={actionButton}
+            onClick={() =>
+              setShowPanel(!showPanel)
+            }
+            style={smallButton}
           >
-            Download Image
+            {showPanel
+              ? "Close"
+              : "More Options"}
           </button>
 
-        </a>
+          {showPanel && (
 
-        <textarea
-          placeholder="Leave your feedback..."
-          value={feedback}
-          onChange={(e) =>
-            setFeedback(
-              e.target.value
-            )
-          }
-          style={{
-            width: "100%",
-            height: "85px",
-            borderRadius: "14px",
-            border: "none",
-            outline: "none",
-            padding: "12px",
-            resize: "none",
-            marginTop: "15px"
-          }}
-        />
+            <div>
 
-        <button
-          onClick={submitFeedback}
-          style={{
-            ...actionButton,
-            background: "white",
-            color: "black",
-            fontWeight: "bold"
-          }}
-        >
-          Submit Feedback
-        </button>
+              <button
+                onClick={() => {
+
+                  document
+                    .documentElement
+                    .requestFullscreen();
+
+                }}
+                style={smallButton}
+              >
+                Fullscreen
+              </button>
+
+              <a
+                href={
+                  gallery.images[currentIndex]
+                }
+                download
+                target="_blank"
+                rel="noreferrer"
+              >
+
+                <button
+                  style={smallButton}
+                >
+                  Download
+                </button>
+
+              </a>
+
+              <textarea
+                placeholder="Leave feedback..."
+                value={feedback}
+                onChange={(e) =>
+                  setFeedback(
+                    e.target.value
+                  )
+                }
+                style={{
+                  width: "100%",
+                  height: "80px",
+                  borderRadius: "12px",
+                  border: "none",
+                  outline: "none",
+                  padding: "10px",
+                  marginTop: "10px",
+                  resize: "none"
+                }}
+              />
+
+              <button
+                onClick={submitFeedback}
+                style={{
+                  ...smallButton,
+                  background: "white",
+                  color: "black"
+                }}
+              >
+                Submit Feedback
+              </button>
+
+            </div>
+
+          )}
+
+        </div>
 
       </div>
-
-      <style>
-        {`
-
-          @keyframes float {
-
-            0% {
-
-              transform:
-                translateY(0px);
-
-            }
-
-            100% {
-
-              transform:
-                translateY(-100vh);
-
-            }
-
-          }
-
-        `}
-      </style>
 
     </div>
 
@@ -668,53 +553,49 @@ function Gallery() {
 const navButtonLeft = {
 
   position: "absolute",
-  left: "12px",
+  left: "15px",
   top: "50%",
   transform:
     "translateY(-50%)",
-  zIndex: 30,
+  zIndex: 20,
   width: "50px",
   height: "50px",
   borderRadius: "50%",
   border: "none",
   background:
-    "rgba(255,255,255,0.15)",
+    "rgba(255,255,255,0.2)",
   color: "white",
   fontSize: "24px",
-  cursor: "pointer",
-  backdropFilter:
-    "blur(10px)"
+  cursor: "pointer"
 
 };
 
 const navButtonRight = {
 
   position: "absolute",
-  right: "12px",
+  right: "15px",
   top: "50%",
   transform:
     "translateY(-50%)",
-  zIndex: 30,
+  zIndex: 20,
   width: "50px",
   height: "50px",
   borderRadius: "50%",
   border: "none",
   background:
-    "rgba(255,255,255,0.15)",
+    "rgba(255,255,255,0.2)",
   color: "white",
   fontSize: "24px",
-  cursor: "pointer",
-  backdropFilter:
-    "blur(10px)"
+  cursor: "pointer"
 
 };
 
-const actionButton = {
+const smallButton = {
 
-  marginTop: "12px",
+  marginTop: "10px",
   width: "100%",
-  padding: "12px",
-  borderRadius: "12px",
+  padding: "10px",
+  borderRadius: "10px",
   border: "none",
   cursor: "pointer"
 
