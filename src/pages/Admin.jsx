@@ -42,6 +42,9 @@ function Admin() {
   const [files, setFiles] =
     useState([]);
 
+  const [uploading, setUploading] =
+    useState(false);
+
   const [feedbacks, setFeedbacks] =
     useState([]);
 
@@ -88,7 +91,9 @@ function Admin() {
 
       }
 
-      let uploadedImages = [];
+      setUploading(true);
+
+      let uploadedFiles = [];
 
       for (
         let i = 0;
@@ -111,13 +116,17 @@ function Admin() {
 
         const response =
           await axios.post(
-            `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
+            `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/auto/upload`,
             formData
           );
 
-        uploadedImages.push(
-          response.data.secure_url
-        );
+        uploadedFiles.push({
+          url:
+            response.data.secure_url,
+
+          type:
+            response.data.resource_type
+        });
 
       }
 
@@ -151,13 +160,13 @@ function Admin() {
         const galleryDoc =
           existingGallery.docs[0];
 
-        const oldImages =
+        const oldFiles =
           galleryDoc.data()
             .images || [];
 
-        const updatedImages = [
-          ...oldImages,
-          ...uploadedImages
+        const updatedFiles = [
+          ...oldFiles,
+          ...uploadedFiles
         ];
 
         await updateDoc(
@@ -172,7 +181,7 @@ function Admin() {
             message,
             music,
             images:
-              updatedImages
+              updatedFiles
           }
         );
 
@@ -191,7 +200,7 @@ function Admin() {
             message,
             music,
             images:
-              uploadedImages
+              uploadedFiles
           }
         );
 
@@ -201,11 +210,17 @@ function Admin() {
         "Gallery Uploaded Successfully"
       );
 
+      setFiles([]);
+
+      setUploading(false);
+
     } catch (error) {
 
       console.log(error);
 
       alert("Upload Failed");
+
+      setUploading(false);
 
     }
 
@@ -225,15 +240,12 @@ function Admin() {
       }}
     >
 
-      {/* FLOATING PARTICLES */}
+      {/* PARTICLES */}
 
       <div
         style={{
           position: "absolute",
-          width: "100%",
-          height: "100%",
-          top: 0,
-          left: 0,
+          inset: 0,
           overflow: "hidden",
           zIndex: 0
         }}
@@ -247,9 +259,9 @@ function Admin() {
               position: "absolute",
               width: "4px",
               height: "4px",
-              background: "white",
               borderRadius: "50%",
-              opacity: 0.4,
+              background: "white",
+              opacity: 0.3,
               top: `${Math.random() * 100}%`,
               left: `${Math.random() * 100}%`,
               animation: `float ${
@@ -262,7 +274,7 @@ function Admin() {
 
       </div>
 
-      {/* MAIN CONTENT */}
+      {/* CONTENT */}
 
       <div
         style={{
@@ -273,8 +285,8 @@ function Admin() {
 
         <h1
           style={{
-            marginBottom: "30px",
-            fontSize: "42px"
+            fontSize: "42px",
+            marginBottom: "30px"
           }}
         >
           ADMIN PANEL
@@ -285,10 +297,10 @@ function Admin() {
             background:
               "rgba(255,255,255,0.08)",
             padding: "25px",
-            borderRadius: "20px",
+            borderRadius: "22px",
             backdropFilter:
-              "blur(10px)",
-            maxWidth: "400px"
+              "blur(14px)",
+            maxWidth: "430px"
           }}
         >
 
@@ -370,6 +382,7 @@ function Admin() {
           <input
             type="file"
             multiple
+            accept="image/*,video/*"
             onChange={(e) =>
               setFiles(
                 e.target.files
@@ -379,6 +392,17 @@ function Admin() {
               marginTop: "20px"
             }}
           />
+
+          <p
+            style={{
+              opacity: 0.7,
+              marginTop: "10px"
+            }}
+          >
+            Selected Files:
+            {" "}
+            {files.length}
+          </p>
 
           <button
             onClick={
@@ -398,12 +422,16 @@ function Admin() {
               color: "black"
             }}
           >
-            Upload Gallery
+            {
+              uploading
+                ? "Uploading..."
+                : "Upload Gallery"
+            }
           </button>
 
         </div>
 
-        {/* FEEDBACK SECTION */}
+        {/* FEEDBACKS */}
 
         <h2
           style={{
@@ -414,45 +442,47 @@ function Admin() {
           USER FEEDBACKS
         </h2>
 
-        {feedbacks.length === 0 ? (
+        {
+          feedbacks.length === 0 ? (
 
-          <p>
-            No feedback yet
-          </p>
+            <p>
+              No feedback yet
+            </p>
 
-        ) : (
+          ) : (
 
-          feedbacks.map(
-            (item, index) => (
+            feedbacks.map(
+              (item, index) => (
 
-              <div
-                key={index}
-                style={{
-                  background:
-                    "rgba(255,255,255,0.08)",
-                  padding: "20px",
-                  marginTop: "20px",
-                  borderRadius: "18px",
-                  maxWidth: "500px",
-                  backdropFilter:
-                    "blur(10px)"
-                }}
-              >
+                <div
+                  key={index}
+                  style={{
+                    background:
+                      "rgba(255,255,255,0.08)",
+                    padding: "20px",
+                    marginTop: "20px",
+                    borderRadius: "18px",
+                    maxWidth: "500px",
+                    backdropFilter:
+                      "blur(10px)"
+                  }}
+                >
 
-                <h3>
-                  {item.username}
-                </h3>
+                  <h3>
+                    {item.username}
+                  </h3>
 
-                <p>
-                  {item.feedback}
-                </p>
+                  <p>
+                    {item.feedback}
+                  </p>
 
-              </div>
+                </div>
 
+              )
             )
-          )
 
-        )}
+          )
+        }
 
       </div>
 
@@ -462,17 +492,13 @@ function Admin() {
           @keyframes float {
 
             0% {
-
               transform:
                 translateY(0px);
-
             }
 
             100% {
-
               transform:
                 translateY(-100vh);
-
             }
 
           }
@@ -489,14 +515,22 @@ function Admin() {
 const inputStyle = {
 
   padding: "12px",
+
   marginTop: "15px",
+
   display: "block",
+
   width: "100%",
+
   borderRadius: "12px",
+
   border: "none",
+
   background:
     "rgba(255,255,255,0.12)",
+
   color: "white",
+
   outline: "none"
 
 };
